@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CblFlasher Campaign Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <h1>CblFlasher</h1>
+                </div>
+                <p class="tagline">Advanced Campaign Management</p>
+            </div>
+            <div class="login-form">
+                <div class="input-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        <span>Username</span>
+                    </label>
+                    <input type="text" id="username" placeholder="Enter your username">
+                </div>
+                <div class="input-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        <span>Password</span>
+                    </label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                    <i class="fas fa-eye toggle-password"></i>
+                </div>
+                <button id="login-btn" class="btn primary-btn">
+                    <span>Login</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <p id="login-error" class="error-message"></p>
+                <div class="form-footer">
+                    <p>Don't have an account? <a href="#" id="switch-to-register">Register</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Register Page -->
+    <div id="register-page" class="hidden">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <h1>CblFlasher</h1>
+                </div>
+                <p class="tagline">Create Your Account</p>
+            </div>
+            <div class="login-form" id="register-form">
+                <div class="input-group">
+                    <label for="reg-username">
+                        <i class="fas fa-user"></i>
+                        <span>Username</span>
+                    </label>
+                    <input type="text" id="reg-username" placeholder="Choose a username">
+                </div>
+                <div class="input-group">
+                    <label for="reg-email">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </label>
+                    <input type="email" id="reg-email" placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label for="reg-password">
+                        <i class="fas fa-lock"></i>
+                        <span>Password</span>
+                    </label>
+                    <input type="password" id="reg-password" placeholder="Create a password">
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">
+                        <i class="fas fa-lock"></i>
+                        <span>Confirm Password</span>
+                    </label>
+                    <input type="password" id="confirm-password" placeholder="Confirm your password">
+                </div>
+                <button id="register-btn" class="btn primary-btn">
+                    <span>Register</span>
+                    <i class="fas fa-user-plus"></i>
+                </button>
+                <p id="register-error" class="error-message"></p>
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Subscription Plans Modal -->
+    <div id="subscription-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>CblFlasher Subscription Plans</h2>
+                <button id="close-modal" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="subscription-plans">
+                    <div class="plan">
+                        <div class="plan-header">
+                            <h3>Basic Plan</h3>
+                            <div class="plan-price">
+                                <span class="currency">₦</span>
+                                <span class="amount">20,000</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> 50 Emails per day</li>
+                                <li><i class="fas fa-check"></i> Basic Templates</li>
+                                <li><i class="fas fa-check"></i> Email Support</li>
+                                <li><i class="fas fa-times"></i> Advanced Analytics</li>
+                                <li><i class="fas fa-times"></i> Priority Support</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="plan featured">
+                        <div class="plan-badge">POPULAR</div>
+                        <div class="plan-header">
+                            <h3>Pro Plan</h3>
+                            <div class="plan-price">
+                                <span class="currency">₦</span>
+                                <span class="amount">30,000</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Unlimited Emails</li>
+                                <li><i class="fas fa-check"></i> All Templates</li>
+                                <li><i class="fas fa-check"></i> Advanced Analytics</li>
+                                <li><i class="fas fa-check"></i> Priority Support</li>
+                                <li><i class="fas fa-check"></i> Custom Domains</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="plan">
+                        <div class="plan-header">
+                            <h3>Enterprise</h3>
+                            <div class="plan-price">
+                                <span class="currency">₦</span>
+                                <span class="amount">50,000</span>
+                                <span class="period">/month</span>
+                            </div>
+                        </div>
+                        <div class="plan-features">
+                            <ul>
+                                <li><i class="fas fa-check"></i> Everything in Pro</li>
+                                <li><i class="fas fa-check"></i> Dedicated Server</li>
+                                <li><i class="fas fa-check"></i> 24/7 Support</li>
+                                <li><i class="fas fa-check"></i> Custom Integration</li>
+                                <li><i class="fas fa-check"></i> Team Management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="subscription-info">
+                    <p>To get your authorization code, contact our admin at <strong>+1 (706) 248-1811</strong> or click the "Get Code" button.</p>
+                    <p>TO MAKE PAYMENT,PAY TO👇👇</p>
+
+<p>🛑 Account Name:-
+   Olowoekunlepe Peter</p>
+
+<p>🛑 Account Number:
+        9025907213</p>
+
+<p>🛑 Bank:- Opay bank🏦</p>
+
+
+<p>Pay the agreed amount into the above details and send a screenshot(proof) of the payment😊</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page -->
+    <div id="dashboard-page" class="hidden">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <h1>CblFlasher</h1>
+                </div>
+                <button id="toggle-sidebar" class="toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a href="#dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#campaigns">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Campaigns</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#emails">
+                        <i class="fas fa-envelope"></i>
+                        <span>Sent Emails</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#profile">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span>Welcome, Admin</span>
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div id="user-dropdown" class="dropdown-menu">
+                            <a href="#profile">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Profile</span>
+                            </a>
+                            <a href="#" id="logout-dropdown-btn">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <!-- Dashboard Content -->
+                <div id="dashboard-content" class="content-section">
+                    <div class="stats-container">
+                        <div class="stat-card">
+                            <div class="stat-icon subscription">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Subscription</h3>
+                                <p class="stat-value">PRO Active</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon emails">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Sent Emails</h3>
+                                <p class="stat-value" id="email-count">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Success Rate</h3>
+                                <p class="stat-value">100%</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon payments">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Payments</h3>
+                                <p class="stat-value">$0.00</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-card">
+                        <h3>Create New Campaign</h3>
+                        <p>Start a new email campaign to reach your audience</p>
+                        <button id="start-flashing-btn" class="btn glow-btn">
+                            <span>Start Flashing</span>
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <div class="activity-list" id="recent-activity-list">
+                            <div class="empty-state">
+                                <i class="fas fa-history"></i>
+                                <p>No recent activity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Profile Content -->
+                <div id="profile-content" class="content-section hidden">
+                    <div class="section-header">
+                        <h3>My Profile</h3>
+                    </div>
+                    <div class="profile-container">
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <div class="profile-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="profile-info">
+                                    <h2 id="profile-username">Username</h2>
+                                    <p id="profile-email">email@example.com</p>
+                                    <p class="profile-status"><span class="badge pro-badge">PRO</span> Account</p>
+                                </div>
+                            </div>
+                            <div class="profile-body">
+                                <div class="profile-section">
+                                    <h3>Account Information</h3>
+                                    <div class="info-group">
+                                        <label>Username:</label>
+                                        <p id="info-username">Username</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Email:</label>
+                                        <p id="info-email">email@example.com</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Member Since:</label>
+                                        <p id="info-joined">January 1, 2025</p>
+                                    </div>
+                                    <div class="info-group">
+                                        <label>Subscription:</label>
+                                        <p>PRO Plan (Active)</p>
+                                    </div>
+                                </div>
+                                <div class="profile-section">
+                                    <h3>Account Actions</h3>
+                                    <div class="profile-actions">
+                                        <button class="btn secondary-btn">
+                                            <i class="fas fa-key"></i>
+                                            <span>Change Password</span>
+                                        </button>
+                                        <button class="btn secondary-btn">
+                                            <i class="fas fa-edit"></i>
+                                            <span>Edit Profile</span>
+                                        </button>
+                                        <button id="profile-logout-btn" class="btn danger-btn">
+                                            <i class="fas fa-sign-out-alt"></i>
+                                            <span>Logout</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-stats-card">
+                            <h3>Your Activity</h3>
+                            <div class="profile-stats">
+                                <div class="stat-item">
+                                    <div class="stat-value" id="profile-email-count">0</div>
+                                    <div class="stat-label">Emails Sent</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">100%</div>
+                                    <div class="stat-label">Success Rate</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-value">PRO</div>
+                                    <div class="stat-label">Account Type</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emails Content -->
+                <div id="emails-content" class="content-section hidden">
+                    <div class="section-header">
+                        <h3>Sent Emails</h3>
+                        <div class="search-container">
+                            <input type="text" placeholder="Search emails...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <div class="emails-list" id="sent-emails-list">
+                        <div class="empty-state">
+                            <i class="fas fa-envelope-open"></i>
+                            <p>No emails sent yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Campaign Creator Page -->
+    <div id="campaign-page" class="hidden">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <h1>CblFlasher</h1>
+                </div>
+                <button id="toggle-campaign-sidebar" class="toggle-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#" id="back-to-dashboard-link">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Dashboard</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="#">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>New Campaign</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h2>Create Campaign</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span>Welcome, Admin</span>
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div class="campaign-creator">
+                    <div class="campaign-status">
+                        <div class="status-badge">PRO Active</div>
+                    </div>
+
+                    <div class="campaign-form">
+                        <div class="form-section">
+                            <h3>Select Campaign Type</h3>
+                            
+<div class="campaign-types">
+  <label class="campaign-type-option">
+    <input type="radio" name="campaign-type" value="GIVEAWAY">
+    <div class="option-content">
+      <div class="option-icon">
+        <i class="fas fa-gift"></i>
+      </div>
+      <div class="option-text">GIVEAWAY</div>
+    </div>
+  </label>
+  <label class="campaign-type-option">
+    <input type="radio" name="campaign-type" value="AIRDROP">
+    <div class="option-content">
+      <div class="option-icon">
+        <i class="fas fa-parachute-box"></i>
+      </div>
+      <div class="option-text">AIRDROP</div>
+    </div>
+  </label>
+  <label class="campaign-type-option">
+    <input type="radio" name="campaign-type" value="UNKNOWN DEVICE LOGIN">
+    <div class="option-content">
+      <div class="option-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <div class="option-text">UNKNOWN DEVICE LOGIN</div>
+    </div>
+  </label>
+  <label class="campaign-type-option">
+    <input type="radio" name="campaign-type" value="ALERT">
+    <div class="option-content">
+      <div class="option-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <div class="option-text">ALERT</div>
+    </div>
+  </label>
+  <label class="campaign-type-option">
+    <input type="radio" name="campaign-type" value="REFUND">
+    <div class="option-content">
+      <div class="option-icon">
+        <i class="fas fa-money-bill-wave"></i>
+      </div>
+      <div class="option-text">REFUND</div>
+    </div>
+  </label>
+</div>
+
+                        </div>
+
+                        <div id="dynamic-fields" class="hidden">
+                            <!-- Wallet Selection (shown for UNKNOWN DEVICE LOGIN) -->
+                            <div id="wallet-field" class="form-section hidden">
+                                <h3>Select Wallet</h3>
+                                <div class="select-wrapper">
+                                    <select id="wallet-select">
+                                        <option value="">Select a wallet</option>
+                                        <option value="USDT">USDT</option>
+                                        <option value="BTC">Bitcoin</option>
+                                        <option value="ETH">Ethereum</option>
+                                        <option value="TRX">Tron</option>
+                                        <option value="BNB">Binance Coin</option>
+                                        <option value="COINBASE">Coinbase</option>
+                                        <option value="TRUST WALLET">Trust Wallet</option>
+                                        <option value="EXODUS">Exodus</option>
+                                        <option value="METAMASK">MetaMask</option>
+                                        <option value="TOKENPOCKET">TokenPocket</option>
+                                        <option value="BINANCE">Binance</option>
+                                        <option value="CRYPTO.COM">Crypto.com</option>
+                                        <option value="ATOMIC WALLET">Atomic Wallet</option>
+                                        <option value="BLOCKCHAIN">Blockchain</option>
+                                        <option value="BLUE WALLET">Blue Wallet</option>
+                                        <option value="KLEVER WALLET">Klever Wallet</option>
+                                        <option value="PHANTON WALLET">Phantom Wallet</option>
+                                        <option value="OKX WALLET">OKX Wallet</option>
+                                        <option value="TRONLINK WALLET">TronLink Wallet</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                            </div>
+
+                            <!-- Email field (shown for all) -->
+                            <div id="email-field" class="form-section">
+                                <h3>Recipient Email</h3>
+                                <div class="input-wrapper">
+                                    <input type="email" id="recipient-email" placeholder="Enter recipient email">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </div>
+
+                            <!-- Message field (shown for all) -->
+                            <div id="message-field" class="form-section">
+                                <h3>Message</h3>
+                                <div class="input-wrapper">
+                                    <textarea id="message-content" placeholder="Enter your custom message"></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Redirect Link field (shown for all) -->
+                            <div id="redirect-field" class="form-section">
+                                <h3>Redirect Link</h3>
+                                <div class="input-wrapper">
+                                    <input type="url" id="redirect-link" placeholder="https://example.com">
+                                    <i class="fas fa-link"></i>
+                                </div>
+                            </div>
+
+                            <!-- Button text field (shown for all) -->
+                            <div id="button-text-field" class="form-section">
+                                <h3>Button Text</h3>
+                                <div class="input-wrapper">
+                                    <input type="text" id="button-text" placeholder="Enter button text">
+                                    <i class="fas fa-font"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button id="send-email-btn" class="btn primary-btn">
+                                    <span>Send Email</span>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="hidden">
+        <div class="spinner"></div>
+        <p>Sending email...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

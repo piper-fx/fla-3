@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CBL Flasher</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="register-page" class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2>Create Account</h2>
+                <p>Register to access CBL Flasher</p>
+            </div>
+            <div class="auth-body">
+                <form id="register-form">
+                    <div class="input-group">
+                        <label for="reg-username">
+                            <i class="fas fa-user"></i>
+                            Username
+                        </label>
+                        <input type="text" id="reg-username" placeholder="Enter username">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-email">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </label>
+                        <input type="email" id="reg-email" placeholder="Enter email">
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-password">
+                            <i class="fas fa-lock"></i>
+                            Password
+                        </label>
+                        <input type="password" id="reg-password" placeholder="Enter password">
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">
+                            <i class="fas fa-lock"></i>
+                            Confirm Password
+                        </label>
+                        <input type="password" id="confirm-password" placeholder="Confirm password">
+                    </div>
+                    <!-- Auth code field removed as requested -->
+                    <div class="error-message" id="register-error" style="display: none;"></div>
+                    <button type="button" id="register-btn" class="btn primary-btn">Register</button>
+                </form>
+            </div>
+            <div class="auth-footer">
+                <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div id="subscription-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Subscription Information</h2>
+                <button class="close-btn" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="subscription-info">
+                    <h3>How to Get Authorization Code</h3>
+                    <p>To get an authorization code for CBL Flasher, you need to subscribe to our service.</p>
+                    <div class="subscription-plan">
+                        <h4>Monthly Subscription</h4>
+                        <div class="plan-details">
+                            <div class="plan-price">₦30,000</div>
+                            <div class="plan-features">
+                                <ul>
+                                    <li><i class="fas fa-check"></i> Unlimited flashing</li>
+                                    <li><i class="fas fa-check"></i> Access to all campaign types</li>
+                                    <li><i class="fas fa-check"></i> Priority support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <p>To subscribe and get your authorization code, contact our support team via WhatsApp.</p>
+                    <button class="btn primary-btn" id="auth-code-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        Contact Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

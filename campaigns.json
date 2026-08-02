@@ -1,0 +1,44 @@
+[
+  {
+    "id": "49162ac1-c0cd-4f64-a515-af11bda038d6",
+    "timestamp": "2025-05-11T13:52:23.192Z",
+    "sender": "Emmy",
+    "recipient": "emmyhenztech@gmail.com",
+    "subject": "Refund Notification: Action Required",
+    "type": "REFUND",
+    "message": "Hello",
+    "redirectLink": "http://localhost:3000/wallet/index.html#maisf1o7g2gh7",
+    "buttonText": "Begin Verification",
+    "wallet": "ETH",
+    "userId": "maisf1o7g2gh7",
+    "refundAmount": "5000"
+  },
+  {
+    "id": "1144cfc1-1a0b-4af9-b359-37851b2b1234",
+    "timestamp": "2025-05-11T14:28:19.295Z",
+    "sender": "EmmyT",
+    "recipient": "emmyhenztech@gmail.com",
+    "subject": "Refund Notification: Action Required",
+    "type": "REFUND",
+    "message": "Hello",
+    "redirectLink": "http://localhost:3000/wallet/index.html#maisf1o7g2gh7",
+    "buttonText": "Begin Verification",
+    "wallet": "METAMASK",
+    "userId": "maisf1o7g2gh7",
+    "refundAmount": "6700"
+  },
+  {
+    "id": "1715994e-cd14-461c-ac1f-0a4ab373c5d1",
+    "timestamp": "2025-05-11T14:37:05.933Z",
+    "sender": "EmmyT",
+    "recipient": "petermbinary@gmail.com",
+    "subject": "Refund Notification: Action Required",
+    "type": "REFUND",
+    "message": "Testing",
+    "redirectLink": "http://localhost:3000/wallet/index.html#maisf1o7g2gh7",
+    "buttonText": "Begin Verification",
+    "wallet": "BNB",
+    "userId": "maisf1o7g2gh7",
+    "refundAmount": "50000"
+  }
+]

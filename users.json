@@ -1,0 +1,16 @@
+[
+  {
+    "username": "Emmy",
+    "password": "11111111",
+    "email": "emmy@gmail.com",
+    "createdAt": "2025-05-11T13:51:27.832Z",
+    "authenticated": false
+  },
+  {
+    "username": "EmmyT",
+    "password": "11111111",
+    "email": "emmy@gmail.com",
+    "createdAt": "2025-05-11T13:53:34.528Z",
+    "authenticated": false
+  }
+]
