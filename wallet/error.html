@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connection Error</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <style>
+    .error-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70vh;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .error-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+    }
+    
+    .error-code {
+      font-size: 5rem;
+      font-weight: 700;
+      color: #f8f9fa;
+      text-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo">CBL ONLINE WALLET CONNECT</div>
+    </div>
+  </header>
+
+  <div class="error-container animate-fade">
+    <div class="error-code">404</div>
+    <div class="card">
+      <span class="badge">Connection Error</span>
+      <h1>Page Not Found</h1>
+      <p class="mb-3">Sorry, the page you are looking for is currently unavailable. Please contact support for assistance.</p>
+      
+      <div class="form-group">
+        <label for="error-email" class="form-label">Your Email Address</label>
+        <input type="email" id="error-email" class="form-control" placeholder="Enter your email for support">
+      </div>
+      
+      <button id="contact-support-btn" class="btn btn-block mb-2">Contact Support</button>
+      <a href="/" class="btn btn-outline btn-block">Return to Home</a>
+    </div>
+  </div>
+
+  <section id="about-section">
+    <div class="about-container">
+      <div class="about-content">
+        <h2>About CBL Wallet Connect</h2>
+        <p>CBL Online Wallet Connect provides secure, seamless integration with all major cryptocurrency wallets. Our platform ensures your digital assets remain protected while giving you complete control.</p>
+        <p>Founded in 2022, we've helped thousands of users manage their blockchain assets with confidence and ease.</p>
+      </div>
+      <div class="newsletter-form">
+        <h3>Stay Updated</h3>
+        <p>Subscribe to our newsletter for the latest updates, security tips, and cryptocurrency news.</p>
+        <form id="newsletter-form">
+          <div class="form-group newsletter-input-group">
+            <input type="email" id="newsletter-email" class="form-control" placeholder="Enter your email address" required>
+            <button type="submit" class="btn">Subscribe</button>
+          </div>
+          <div class="social-links">
+            <a href="mailto:contact@cblwallet.com" class="social-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email" class="social-icon">
+            </a>
+            <a href="#" class="social-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Twitter_Logo.png" alt="Twitter" class="social-icon">
+            </a>
+            <a href="#" class="social-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="social-icon">
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>© 2023 CBL ONLINE WALLET CONNECT. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('contact-support-btn').addEventListener('click', function() {
+      const email = document.getElementById('error-email').value;
+      if (email) {
+        alert('Support request submitted. We will contact you at ' + email);
+        document.getElementById('error-email').value = '';
+      } else {
+        alert('Please enter your email address.');
+      }
+    });
+    
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value;
+      if (email) {
+        alert('Thank you for subscribing! We\'ll send updates to ' + email);
+        document.getElementById('newsletter-email').value = '';
+      } else {
+        alert('Please enter your email address.');
+      }
+    });
+  </script>
+</body>
+</html>

